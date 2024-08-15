@@ -1,4 +1,6 @@
-import 'package:bloc_test/materi/02_bloc_cubit.dart';
+// import 'package:bloc_test/materi/02_bloc_cubit.dart';
+// import 'package:bloc_test/materi/03_bloc_observer_cubit.dart';
+import 'package:bloc_test/materi/04_bloc_builder.dart';
 // import 'package:bloc_test/materi/bloc_stream.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CubitLearn(),
+      home: BlocBuildersLearn(),
     );
   }
 }
