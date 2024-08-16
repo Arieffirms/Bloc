@@ -12,7 +12,10 @@ class BlocProviderLearn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+     // class yang sama dengan class + / -
     Counter myCounter = BlocProvider.of<Counter>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bloc Provider"),

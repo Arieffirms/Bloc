@@ -9,9 +9,13 @@ class CenterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // class yang sama dengan class + / -
+    Counter myCounter = BlocProvider.of<Counter>(context);
+    
     return Center(
       child: BlocBuilder<Counter, int>(
-        bloc: BlocProvider.of<Counter>(context),
+        bloc: myCounter,
         builder: (context, state) {
           return Text(
             "$state",

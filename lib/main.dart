@@ -4,8 +4,9 @@
 // import 'package:bloc_test/materi/05_bloc_consumer.dart';
 // import 'package:bloc_test/materi/bloc_stream.dart';
 // import 'package:bloc_test/materi/06_bloc_listener%20copy.dart';
-import 'package:bloc_test/materi/04_bloc/counter.dart';
-import 'package:bloc_test/materi/07_bloc_provider.dart';
+// import 'package:bloc_test/materi/07_bloc_provider.dart';
+import 'package:bloc_test/materi/08_bloc_dependency_injection.dart';
+import 'package:bloc_test/materi/08_bloc_dependency_injection/bloc/counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,15 +17,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => Counter(),
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: BlocProviderLearn(),
-      ),
-    );
+        create: (context) => CounterApp(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: BlocDependencyInjectionLearn(),
+        ));
   }
 }
