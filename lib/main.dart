@@ -1,29 +1,58 @@
-// import 'package:bloc_test/materi/02_bloc_cubit.dart';
-// import 'package:bloc_test/materi/03_bloc_observer_cubit.dart';
-// import 'package:bloc_test/materi/04_bloc_builder.dart';
-// import 'package:bloc_test/materi/05_bloc_consumer.dart';
-// import 'package:bloc_test/materi/bloc_stream.dart';
-// import 'package:bloc_test/materi/06_bloc_listener%20copy.dart';
-// import 'package:bloc_test/materi/07_bloc_provider.dart';
-import 'package:bloc_test/materi/08_bloc_dependency_injection.dart';
-import 'package:bloc_test/materi/08_bloc_dependency_injection/bloc/counter.dart';
+import 'package:bloc_test/bloc/counter.dart';
+import 'package:bloc_test/bloc/theme.dart';
+import 'package:bloc_test/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final myTheme = ThemeBloc();
+
+  final allProvider = [
+    BlocProvider(
+      create: (context) => CounterBloc(),
+    ),
+    BlocProvider(
+      create: (context) => ThemeBloc(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => CounterApp(),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: BlocDependencyInjectionLearn(),
-        ));
+    return MultiBlocProvider(
+      providers: allProvider,
+      child: BlocBuilder<ThemeBloc, bool>(
+        bloc: myTheme,
+        builder: (context, state) {
+          return MaterialApp(
+            theme: state ? ThemeData.light() : ThemeData.dark(),
+            home: BlocProvider(
+              create: (BuildContext context) => CounterBloc(),
+              child: const HomePage(),
+            ),
+          );
+        },
+      ),
+    );
+
+    // bisa juga menggunakan cara ini
+
+    // return BlocProvider(
+    //   create: (context) => myTheme,
+    //   child: BlocBuilder<ThemeBloc, bool>(
+    //     bloc: myTheme,
+    //     builder: (context, state) {
+    //       return MaterialApp(
+    //         theme: state ? ThemeData.light() : ThemeData.dark(),
+    //         home: BlocProvider(
+    //           create: (BuildContext context) => CounterBloc(),
+    //           child: const HomePage(),
+    //         ),
+    //       );
+    //     },
+    //   ),
+    // );
   }
 }

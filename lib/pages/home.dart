@@ -1,20 +1,25 @@
-import 'package:bloc_test/materi/08_bloc_dependency_injection/bloc/counter.dart';
-import 'package:bloc_test/materi/08_bloc_dependency_injection/widgets/merah.dart';
+import 'package:bloc_test/bloc/counter.dart';
+import 'package:bloc_test/bloc/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// ignore: must_be_immutable
-class BlocDependencyInjectionLearn extends StatelessWidget {
-  BlocDependencyInjectionLearn({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final myCounter = BlocProvider.of<CounterApp>(context);
-    final myCounter = context.read<CounterApp>();
+    final mycounter = context.read<CounterBloc>();
+    final myTheme = context.read<ThemeBloc>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bloc Dependency Injection"),
         centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          myTheme.changeTheme();
+        },
+        child: const Icon(Icons.theater_comedy),
       ),
       body: Center(
         child: Row(
@@ -24,8 +29,7 @@ class BlocDependencyInjectionLearn extends StatelessWidget {
               color: Colors.green,
               child: InkWell(
                 onTap: () {
-                  // decrement
-                  myCounter.decrement();
+                  mycounter.remove();
                 },
                 splashColor: Colors.black,
                 child: const SizedBox(
@@ -38,13 +42,17 @@ class BlocDependencyInjectionLearn extends StatelessWidget {
                 ),
               ),
             ),
-            Merah(),
+            BlocBuilder<CounterBloc, int>(
+              builder: (context, state) {
+                return Text("$state", style: const TextStyle(fontSize: 50));
+              },
+            ),
             Material(
               color: Colors.green,
               child: InkWell(
                 onTap: () {
                   // increment
-                  myCounter.increment();
+                  mycounter.add();
                 },
                 splashColor: Colors.black,
                 child: const SizedBox(
